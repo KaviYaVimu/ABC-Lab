@@ -18,6 +18,10 @@ public class Patients {
     private String Email;
     private int UserId;
     
+    public Patients(){
+        
+    }
+    
 
 
     public Patients(int id, String Name, String PhoneNumber, String DOB, String Gender, String Email, int UserId) {
