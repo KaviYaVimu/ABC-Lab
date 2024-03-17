@@ -23,7 +23,9 @@ import Model.Technicians;
  *
  * @author kavin
  */
-@Path("technician")
+@Path("techniciangit add .\n" +
+"git commit -m \"navigation succesfull\"\n" +
+"git push -u origin main")
 public class TechniciansController {
     Gson gson = new Gson();
 
