@@ -10,7 +10,7 @@ package Model;
  */
 public class Appointment {
     
-    private int id;
+    private int APid;
     private String Name;
     private String PhoneNumber;
     private String ReportType;
@@ -24,8 +24,8 @@ public class Appointment {
         
     }
 
-    public Appointment(int id, String Name, String PhoneNumber, String ReportType, String Gender, String Email, String AppointmentTime, String AppointmentDate, int UserId) {
-        this.id = id;
+    public Appointment(int APid, String Name, String PhoneNumber, String ReportType, String Gender, String Email, String AppointmentTime, String AppointmentDate, int UserId) {
+        this.APid = APid;
         this.Name = Name;
         this.PhoneNumber = PhoneNumber;
         this.ReportType = ReportType;
@@ -36,12 +36,12 @@ public class Appointment {
         this.UserId = UserId;
     }
 
-    public int getId() {
-        return id;
+    public int getAPid() {
+        return APid;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setAPid(int APid) {
+        this.APid = APid;
     }
 
     public String getName() {
@@ -107,5 +107,6 @@ public class Appointment {
     public void setUserId(int UserId) {
         this.UserId = UserId;
     }
+    
     
 }

@@ -34,16 +34,16 @@ public class PatientsAccess {
     }
 
       
-    public Patients getTechnician(int id) throws SQLException {
+    public Patients getPatients(int Pid) throws SQLException {
         Patients st = null;
          try {
 
             try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS); 
                     Statement stmt = conn.createStatement(); 
-                    ResultSet rs = stmt.executeQuery("SELECT * FROM Technician WHERE tId="+ id);) {
+                    ResultSet rs = stmt.executeQuery("SELECT * FROM Technician WHERE tId="+ Pid);) {
                 while (rs.next()) {
                     st = new Patients();
-                    st.setId(rs.getInt("Id"));
+                    st.setPid(rs.getInt("PId"));
                     st.setName(rs.getString("Name"));
                     st.setDOB(rs.getString("DOB"));
                     st.setGender(rs.getString("Gender"));
@@ -69,13 +69,16 @@ public class PatientsAccess {
          try {
             try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS); 
                     Statement stmt = conn.createStatement(); 
-                    ResultSet rs = stmt.executeQuery("SELECT * FROM Technician");) {
+                    ResultSet rs = stmt.executeQuery("SELECT * FROM Patient");) {
                 while (rs.next()) {
                     Patients st = new Patients();
-                    st.setId(rs.getInt("Id"));
+                    st.setPid(rs.getInt("PId"));
                     st.setName(rs.getString("Name"));
-                    st.setEmail(rs.getString("email"));
-                    st.setUserId(rs.getInt("uiId"));
+                    st.setPhoneNumber(rs.getString("PhoneNumber"));
+                    st.setDOB(rs.getString("DOB"));
+                    st.setGender(rs.getString("Gender"));
+                    st.setEmail(rs.getString("Email"));
+                    st.setUserId(rs.getInt("UserId"));
                     Patients.add(st);
                 }
             } catch (SQLException e) {
@@ -94,8 +97,8 @@ public class PatientsAccess {
             try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS); 
                     Statement stmt = conn.createStatement(); 
                     ) {
-                stmt.executeUpdate("INSERT INTO Patients (Name, email, uiId) "
-                        + "VALUES ('"+ st.getName()+"',', '"+ st.getEmail()+"', '"+ st.getUserId()+"');");
+                stmt.executeUpdate("INSERT INTO Patients (PId, Name, PhoneNumber, DOB, Gender, Email, UserId) "
+                        + "VALUES ('"+ st.getPid()+"','"+ st.getName()+"','"+ st.getPhoneNumber()+"','"+ st.getDOB()+"','"+ st.getGender()+"', '"+ st.getEmail()+"', '"+ st.getUserId()+"');");
                 return true;
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -107,12 +110,12 @@ public class PatientsAccess {
         return false;
     }
 
-    public boolean updateTechnician(Patients st) {
+    public boolean updatePatient(Patients st) {
         try {
             try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS); 
                     Statement stmt = conn.createStatement(); 
                     ) {
-                stmt.executeUpdate("UPDATE Technician SET Name = '" +st.getName()+ "', email = '" + st.getEmail()+ "', uiId = '" + st.getUserId()+ "' WHERE (tId = '" + st.getId() +"');");
+                stmt.executeUpdate("UPDATE Patient SET Pid = '" +st.getPid()+ "',Name = '" +st.getName()+ "',PhoneNumber = '" +st.getPhoneNumber()+ "',DOB = '" +st.getDOB()+ "',Gender = '" +st.getGender()+ "', Email = '" + st.getEmail()+ "', UserId = '" + st.getUserId()+ "' WHERE (Id = '" + st.getPid()+"');");
                 return true;
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -122,22 +125,5 @@ public class PatientsAccess {
 
         }
         return false;
-    }
-    
-    public boolean deletePatient(int id) {
-        try {
-            try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS); 
-                    Statement stmt = conn.createStatement(); 
-                    ) {
-                stmt.executeUpdate("DELETE FROM Technician WHERE (tid = '"+ id + "');");
-                return true;
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-
-        } catch (Exception e) {
-
-        }
-        return false;
     }
 }

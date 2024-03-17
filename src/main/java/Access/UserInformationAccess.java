@@ -4,7 +4,6 @@
  */
 package Access;
 
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -12,20 +11,22 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import Model.Technicians;
+import Model.UserInformation;
+
+
 
 /**
  *
  * @author kavin
  */
-public class TechniciansAccess {
+public class UserInformationAccess {
     
-      static final String DB_URL = "jdbc:mysql://localhost:3306/abc_lab";
+    static final String DB_URL = "jdbc:mysql://localhost:3306/abc_laboratories";
     static final String USER = "root";
     static final String PASS = "";
     
     
-        public TechniciansAccess() {
+        public UserInformationAccess() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (Exception e) {
@@ -33,21 +34,23 @@ public class TechniciansAccess {
         }
     }
 
-        public Technicians getTechnician(int Tid) throws SQLException {
-        Technicians st = null;
+      
+    public UserInformation getUserInformation(int Pid) throws SQLException {
+        UserInformation st = null;
          try {
 
             try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS); 
                     Statement stmt = conn.createStatement(); 
-                    ResultSet rs = stmt.executeQuery("SELECT * FROM Technician WHERE Id="+ Tid);) {
+                    ResultSet rs = stmt.executeQuery("SELECT * FROM UserInformation WHERE tId="+ Pid);) {
                 while (rs.next()) {
-                    st = new Technicians();
-                    st.setTid(rs.getInt("Tid"));
+                    st = new UserInformation();
+                    st.setUserId(rs.getInt("UserId"));
                     st.setName(rs.getString("Name"));
-                    st.setEmail(rs.getString("email"));
-                    st.setUserId(rs.getInt("userId"));
+                    st.setEmail(rs.getString("Email"));
+                    st.setPassword(rs.getString("Password"));
+                    st.setRole(rs.getInt("Role"));
                     break;
-                }
+                 }
             } catch (SQLException e) {
                 System.err.print(e);
                 throw e;
@@ -61,21 +64,20 @@ public class TechniciansAccess {
         return st;
     }
 
-        
-        public List<Technicians> getTechnicians() {
-        List<Technicians> Technicians = new ArrayList<>();
+    public List<UserInformation> getUserInformation() {
+        List<UserInformation> UserInformation = new ArrayList<>();
          try {
             try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS); 
                     Statement stmt = conn.createStatement(); 
-                    ResultSet rs = stmt.executeQuery("SELECT * FROM Technician");) {
+                    ResultSet rs = stmt.executeQuery("SELECT * FROM UserInformation");) {
                 while (rs.next()) {
-                    Technicians st = new Technicians();
-                   //st = new Technicians();
-                    st.setTid(rs.getInt("Tid"));
+                    UserInformation st = new UserInformation();
+                    st.setUserId(rs.getInt("UserId"));
                     st.setName(rs.getString("Name"));
-                    st.setEmail(rs.getString("email"));
-                    st.setUserId(rs.getInt("userId"));
-                    Technicians.add(st);
+                    st.setEmail(rs.getString("Email"));
+                    st.setPassword(rs.getString("Password"));
+                    st.setRoleId(rs.getInt("RoleId"));
+                    UserInformation.add(st);
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -85,16 +87,16 @@ public class TechniciansAccess {
 
         }
 
-        return Technicians;
+     return UserInformation;
     }
-
-        public boolean addTechnician(Technicians st) {
+    
+    public boolean addUserInformation(UserInformation st) {
         try {
             try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS); 
                     Statement stmt = conn.createStatement(); 
                     ) {
-                stmt.executeUpdate("INSERT INTO Technician (Name, email, userId) "
-                        + "VALUES ('"+ st.getName()+"','"+ st.getEmail()+"', '"+ st.getUserId()+"');");
+                stmt.executeUpdate("INSERT INTO UserInformation (UserId, Name, Email, Password, RoleId) "
+                        + "VALUES ('"+ st.getUserId()+"','"+ st.getName()+"','"+ st.getEmail()+"','"+ st.getPassword()+"', '"+ st.getRoleId()+"');");
                 return true;
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -105,13 +107,13 @@ public class TechniciansAccess {
         }
         return false;
     }
-        
-         public boolean updateTechnician(Technicians st) {
+
+    public boolean updateUserInformation(UserInformation st) {
         try {
             try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS); 
                     Statement stmt = conn.createStatement(); 
                     ) {
-                stmt.executeUpdate("UPDATE Technician SET tName = '" +st.getName()+ "',email = '" + st.getEmail()+ "', uiId = '" + st.getUserId()+ "' WHERE (Id = '" + st.getTid()+"');");
+                stmt.executeUpdate("UPDATE UserInformation SET UserId = '" +st.getUserId()+ "',Name = '" +st.getName()+ "', Email = '" + st.getEmail()+ "',  Password = '" + st.getPassword()+ "', RoleId = '" + st.getRoleId()+ "' WHERE (Id = '" + st.getUserId()+"');");
                 return true;
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -122,5 +124,6 @@ public class TechniciansAccess {
         }
         return false;
     }
+    
 
 }

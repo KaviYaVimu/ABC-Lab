@@ -16,18 +16,18 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.sql.SQLException;
-import Access.AppointmentAccess;
-import Model.Appointment;
+import Access.PrescriptionAccess;
+import Model.Prescription;
 
 /**
  *
  * @author kavin
  */
-@Path("Appointment")
-public class AppointmentController {
+@Path("Prescription")
+public class PrescriptionController {
     Gson gson = new Gson();
 
-    public AppointmentController() {
+    public PrescriptionController() {
     }
     
     @GET
@@ -36,16 +36,16 @@ public class AppointmentController {
         
         
         return Response
-                .ok(gson.toJson(new AppointmentAccess().getAppointment()))
+                .ok(gson.toJson(new PrescriptionAccess().getPrescription()))
                 .build();
     }
     
     @GET
-    @Path("{APid}")
+    @Path("{Presid}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getStudent(@PathParam("APid") int APid){ 
+    public Response getStudent(@PathParam("Presid") int Presid){ 
         try {
-        Appointment student = new AppointmentAccess().getAppointment(APid);
+        Prescription student = new PrescriptionAccess().getPrescription(Presid);
         
         if (student != null) {
                   return Response
@@ -66,24 +66,23 @@ public class AppointmentController {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addStudent(String json){ 
-        Appointment Appointment = gson.fromJson(json, Appointment.class); 
-        new AppointmentAccess().addAppointment(Appointment);
+        Prescription Prescription = gson.fromJson(json, Prescription.class); 
+        new PrescriptionAccess().addPrescription(Prescription);
         return Response
                 .status(Response.Status.CREATED)
                 .build();
     }
     
     @PUT
-    @Path("{APid}")
+    @Path("{id}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateStudent(String json, @PathParam("APid") int APid){ 
-        Appointment Appointment = gson.fromJson(json, Appointment.class);
-        new AppointmentAccess().updateAppointment(Appointment);
+    public Response updateStudent(String json, @PathParam("Presid") int Presid){ 
+        Prescription Prescription = gson.fromJson(json, Prescription.class);
+        new PrescriptionAccess().updatePrescription(Prescription);
         return Response
                     .ok()
                     .build();
     }
     
     
-   
-}
+   }

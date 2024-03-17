@@ -10,7 +10,7 @@ package Model;
  */
 public class Technicians {
     
-    private int id;
+    private int Tid;
     private String Name;
     private String Email;
     private int UserId;
@@ -19,19 +19,19 @@ public class Technicians {
         
     }
 
-    public Technicians(int id, String Name, String Email, int UserId) {
-        this.id = id;
+    public Technicians(int Tid, String Name, String Email, int UserId) {
+        this.Tid = Tid;
         this.Name = Name;
         this.Email = Email;
         this.UserId = UserId;
     }
 
-    public int getId() {
-        return id;
+    public int getTid() {
+        return Tid;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setTid(int Tid) {
+        this.Tid = Tid;
     }
 
     public String getName() {
@@ -57,5 +57,6 @@ public class Technicians {
     public void setUserId(int UserId) {
         this.UserId = UserId;
     }
-    
+
+   
 }

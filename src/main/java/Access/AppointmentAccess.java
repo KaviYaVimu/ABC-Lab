@@ -31,16 +31,16 @@ public class AppointmentAccess {
             
         }
     }
-          public Appointment getAppointment(int id) throws SQLException {
+          public Appointment getAppointment(int APid) throws SQLException {
         Appointment st = null;
          try {
 
             try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS); 
                     Statement stmt = conn.createStatement(); 
-                    ResultSet rs = stmt.executeQuery("SELECT * FROM Appointment WHERE tId="+ id);) {
+                    ResultSet rs = stmt.executeQuery("SELECT * FROM Appointment WHERE APid="+ APid);) {
                 while (rs.next()) {
                     st = new Appointment();
-                    st.setId(rs.getInt("Id"));
+                    st.setAPid(rs.getInt("APid"));
                     st.setName(rs.getString("Name"));
                     st.setPhoneNumber(rs.getString("phoneNumber"));
                     st.setReportType(rs.getString("ReportType"));
@@ -73,7 +73,7 @@ public class AppointmentAccess {
                     ResultSet rs = stmt.executeQuery("SELECT * FROM Appointment");) {
                 while (rs.next()) {
                     Appointment st = new Appointment();
-                    st.setId(rs.getInt("Id"));
+                    st.setAPid(rs.getInt("APid"));
                     st.setName(rs.getString("Name"));
                     st.setPhoneNumber(rs.getString("PhoneNumber"));
                     st.setReportType(rs.getString("ReportType"));
@@ -100,8 +100,8 @@ public class AppointmentAccess {
             try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS); 
                     Statement stmt = conn.createStatement(); 
                     ) {
-                stmt.executeUpdate("INSERT INTO Technician (Id, Name, phoneNumber, ReportType, Gender, Email, AppointmentTime, AppointmentDate, UserId) "
-                        + "VALUES ('"+ st.getId()+"','"+ st.getName()+"', '"+ st.getPhoneNumber()+"','"+ st.getReportType()+"','"+ st.getGender()+"','"+ st.getEmail()+"','"+ st.getAppointmentTime()+"','"+ st.getAppointmentDate()+"','"+ st.getUserId()+"';");
+                stmt.executeUpdate("INSERT INTO Appointment (Id, Name, phoneNumber, ReportType, Gender, Email, AppointmentTime, AppointmentDate, UserId) "
+                        + "VALUES ('"+ st.getAPid()+"','"+ st.getName()+"', '"+ st.getPhoneNumber()+"','"+ st.getReportType()+"','"+ st.getGender()+"','"+ st.getEmail()+"','"+ st.getAppointmentTime()+"','"+ st.getAppointmentDate()+"','"+ st.getUserId()+"';");
                 return true;
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -118,7 +118,7 @@ public class AppointmentAccess {
             try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS); 
                     Statement stmt = conn.createStatement(); 
                     ) {
-                stmt.executeUpdate("UPDATE Technician SET ID = '" +st.getId()+ "', Name = '" + st.getName()+ "', PhoneNumber = '" + st.getPhoneNumber()+ "', ReportType = '" + st.getReportType()+ "', Gender = '" + st.getGender()+ "', Email = '" + st.getEmail()+ "', AppointmentTime = '" + st.getAppointmentDate()+ "' WHERE (UserId = '" + st.getUserId() +"');");
+                stmt.executeUpdate("UPDATE Appointment SET ID = '" +st.getAPid()+ "', Name = '" + st.getName()+ "', PhoneNumber = '" + st.getPhoneNumber()+ "', ReportType = '" + st.getReportType()+ "', Gender = '" + st.getGender()+ "', Email = '" + st.getEmail()+ "', AppointmentTime = '" + st.getAppointmentDate()+ "' WHERE (UserId = '" + st.getUserId() +"');");
                 return true;
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -130,21 +130,5 @@ public class AppointmentAccess {
         return false;
     }
               
-               public boolean deleteAppointment(int id) {
-        try {
-            try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS); 
-                    Statement stmt = conn.createStatement(); 
-                    ) {
-                stmt.executeUpdate("DELETE FROM Appointment WHERE (tid = '"+ id + "');");
-                return true;
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-
-        } catch (Exception e) {
-
-        }
-        return false;}
-}
 
 }

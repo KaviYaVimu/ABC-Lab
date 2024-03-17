@@ -10,7 +10,7 @@ package Model;
  */
 public class Admin {
     
-    private int id;
+    private int Aid;
     private String Name;
     private String Email;
     private int UserId;
@@ -19,19 +19,19 @@ public class Admin {
         
     }
 
-    public Admin(int id, String Name, String Email, int UserId) {
-        this.id = id;
+    public Admin(int Aid, String Name, String Email, int UserId) {
+        this.Aid = Aid;
         this.Name = Name;
         this.Email = Email;
         this.UserId = UserId;
     }
 
-    public int getId() {
-        return id;
+    public int getAid() {
+        return Aid;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setAid(int Aid) {
+        this.Aid = Aid;
     }
 
     public String getName() {
@@ -58,4 +58,5 @@ public class Admin {
         this.UserId = UserId;
     }
     
+
 }

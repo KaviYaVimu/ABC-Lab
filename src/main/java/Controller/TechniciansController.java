@@ -41,11 +41,11 @@ public class TechniciansController {
     }
     
     @GET
-    @Path("{id}")
+    @Path("{Tid}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getStudent(@PathParam("id") int id){ 
+    public Response getStudent(@PathParam("Tid") int Tid){ 
         try {
-        Technicians student = new TechniciansAccess().getTechnician(id);
+        Technicians student = new TechniciansAccess().getTechnician(Tid);
         
         if (student != null) {
                   return Response
@@ -74,9 +74,9 @@ public class TechniciansController {
     }
     
     @PUT
-    @Path("{id}")
+    @Path("{Tid}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateStudent(String json, @PathParam("id") int id){ 
+    public Response updateStudent(String json, @PathParam("Tid") int id){ 
         Technicians student = gson.fromJson(json, Technicians.class);
         new TechniciansAccess().updateTechnician(student);
         return Response
@@ -85,12 +85,5 @@ public class TechniciansController {
     }
     
     
-    @DELETE
-    @Path("{id}")
-    public Response deleteStudent(@PathParam("id") int id){ 
-        new TechniciansAccess().deleteTechnician(id);
-        return Response
-            .ok()
-            .build();
-    }
+    
 }

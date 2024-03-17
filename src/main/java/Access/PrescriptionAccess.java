@@ -4,7 +4,6 @@
  */
 package Access;
 
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -12,20 +11,22 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import Model.Technicians;
+import Model.Prescription;
+
+
 
 /**
  *
  * @author kavin
  */
-public class TechniciansAccess {
+public class PrescriptionAccess {
     
-      static final String DB_URL = "jdbc:mysql://localhost:3306/abc_lab";
+    static final String DB_URL = "jdbc:mysql://localhost:3306/abc_laboratories";
     static final String USER = "root";
     static final String PASS = "";
     
     
-        public TechniciansAccess() {
+        public PrescriptionAccess() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (Exception e) {
@@ -33,21 +34,22 @@ public class TechniciansAccess {
         }
     }
 
-        public Technicians getTechnician(int Tid) throws SQLException {
-        Technicians st = null;
+      
+    public Prescription getPrescription(int Presid) throws SQLException {
+        Prescription st = null;
          try {
 
             try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS); 
                     Statement stmt = conn.createStatement(); 
-                    ResultSet rs = stmt.executeQuery("SELECT * FROM Technician WHERE Id="+ Tid);) {
+                    ResultSet rs = stmt.executeQuery("SELECT * FROM Prescription WHERE tId="+ Presid);) {
                 while (rs.next()) {
-                    st = new Technicians();
-                    st.setTid(rs.getInt("Tid"));
-                    st.setName(rs.getString("Name"));
-                    st.setEmail(rs.getString("email"));
-                    st.setUserId(rs.getInt("userId"));
+                    st = new Prescription();
+                    st.setPresid(rs.getInt("Presid"));
+                    st.setResults(rs.getString("Results"));
+                    st.setDocument(rs.getString("Document"));
+                    st.setUserId(rs.getInt("UserId"));
                     break;
-                }
+                 }
             } catch (SQLException e) {
                 System.err.print(e);
                 throw e;
@@ -61,21 +63,19 @@ public class TechniciansAccess {
         return st;
     }
 
-        
-        public List<Technicians> getTechnicians() {
-        List<Technicians> Technicians = new ArrayList<>();
+    public List<Prescription> getPrescription() {
+        List<Prescription> Prescription = new ArrayList<>();
          try {
             try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS); 
                     Statement stmt = conn.createStatement(); 
-                    ResultSet rs = stmt.executeQuery("SELECT * FROM Technician");) {
+                    ResultSet rs = stmt.executeQuery("SELECT * FROM Prescription");) {
                 while (rs.next()) {
-                    Technicians st = new Technicians();
-                   //st = new Technicians();
-                    st.setTid(rs.getInt("Tid"));
-                    st.setName(rs.getString("Name"));
-                    st.setEmail(rs.getString("email"));
-                    st.setUserId(rs.getInt("userId"));
-                    Technicians.add(st);
+                    Prescription st = new Prescription();
+                    st.setPresid(rs.getInt("Presid"));
+                    st.setResults(rs.getString("Results"));
+                    st.setDocument(rs.getString("Document"));
+                    st.setUserId(rs.getInt("UserId"));
+                    Prescription.add(st);
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -85,33 +85,16 @@ public class TechniciansAccess {
 
         }
 
-        return Technicians;
+     return Prescription;
     }
-
-        public boolean addTechnician(Technicians st) {
+    
+    public boolean addPrescription(Prescription st) {
         try {
             try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS); 
                     Statement stmt = conn.createStatement(); 
                     ) {
-                stmt.executeUpdate("INSERT INTO Technician (Name, email, userId) "
-                        + "VALUES ('"+ st.getName()+"','"+ st.getEmail()+"', '"+ st.getUserId()+"');");
-                return true;
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-
-        } catch (Exception e) {
-
-        }
-        return false;
-    }
-        
-         public boolean updateTechnician(Technicians st) {
-        try {
-            try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS); 
-                    Statement stmt = conn.createStatement(); 
-                    ) {
-                stmt.executeUpdate("UPDATE Technician SET tName = '" +st.getName()+ "',email = '" + st.getEmail()+ "', uiId = '" + st.getUserId()+ "' WHERE (Id = '" + st.getTid()+"');");
+                stmt.executeUpdate("INSERT INTO Prescription (Presid, Result, Document, UserId) "
+                        + "VALUES ('"+ st.getPresid()+"','"+ st.getResults()+"','"+ st.getDocument()+"', '"+ st.getUserId()+"');");
                 return true;
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -123,4 +106,22 @@ public class TechniciansAccess {
         return false;
     }
 
+    public boolean updatePrescription(Prescription st) {
+        try {
+            try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS); 
+                    Statement stmt = conn.createStatement(); 
+                    ) {
+                stmt.executeUpdate("UPDATE Prescription SET Presid = '" +st.getPresid()+ "',Results = '" +st.getResults()+"', Document = '" + st.getDocument()+ "', UserId = '" + st.getUserId()+ "' WHERE (PresId = '" + st.getPresid()+"');");
+                return true;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+        } catch (Exception e) {
+
+        }
+        return false;
+    }
+    
 }
+

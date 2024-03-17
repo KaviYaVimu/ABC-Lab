@@ -18,6 +18,7 @@ import jakarta.ws.rs.core.Response;
 import java.sql.SQLException;
 import Access.PatientsAccess;
 import Model.Patients;
+
 /**
  *
  * @author kavin
@@ -40,11 +41,11 @@ public class PatientsController {
     }
     
     @GET
-    @Path("{id}")
+    @Path("{Pid}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getStudent(@PathParam("id") int id){ 
+    public Response getStudent(@PathParam("Pid") int Pid){ 
         try {
-        Patients student = new PatientsAccess().getPatient(id);
+        Patients student = new PatientsAccess().getPatients(Pid);
         
         if (student != null) {
                   return Response
@@ -62,7 +63,7 @@ public class PatientsController {
         }
     }
     
-      @POST
+    @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addStudent(String json){ 
         Patients Patient = gson.fromJson(json, Patients.class); 
@@ -73,9 +74,9 @@ public class PatientsController {
     }
     
     @PUT
-    @Path("{id}")
+    @Path("{Pid}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateStudent(String json, @PathParam("id") int id){ 
+    public Response updateStudent(String json, @PathParam("Pid") int Pid){ 
         Patients student = gson.fromJson(json, Patients.class);
         new PatientsAccess().updatePatient(student);
         return Response
@@ -84,12 +85,5 @@ public class PatientsController {
     }
     
     
-    @DELETE
-    @Path("{id}")
-    public Response deleteStudent(@PathParam("id") int id){ 
-        new PatientsAccess().deletePatient(id);
-        return Response
-            .ok()
-            .build();
-    }
+  
 }
